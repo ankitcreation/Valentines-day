@@ -1,0 +1,198 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Romantic Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  background:radial-gradient(circle at top,#ff9a9e,#ff4d6d);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+}
+
+/* floating hearts background */
+.heart-bg{
+  position:absolute;
+  bottom:-20px;
+  font-size:24px;
+  animation:floatUp 6s linear infinite;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+
+.container{
+  text-align:center;
+  background:rgba(255,255,255,0.25);
+  padding:40px 30px;
+  border-radius:30px;
+  backdrop-filter:blur(14px);
+  max-width:92%;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* BIG teddy */
+.teddy{
+  width:220px;
+  margin-bottom:15px;
+  animation:bounce 3s ease-in-out infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+}
+
+h1{
+  font-family:'Pacifico',cursive;
+  color:white;
+  font-size:30px;
+  margin-bottom:25px;
+  text-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+.buttons{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  align-items:center;
+  position:relative;
+}
+
+/* YES first */
+#yesBtn{
+  background:#ff003c;
+  color:white;
+  padding:16px 42px;
+  font-size:22px;
+  border:none;
+  border-radius:60px;
+  cursor:pointer;
+  animation:pulse 1.5s infinite;
+  transition:transform 0.3s;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,0,60,0.6);}
+  70%{box-shadow:0 0 0 18px rgba(255,0,60,0);}
+  100%{box-shadow:0 0 0 0 rgba(255,0,60,0);}
+}
+
+#noBtn{
+  background:white;
+  color:#ff003c;
+  padding:14px 36px;
+  font-size:18px;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  position:relative;
+  transition:all 0.3s ease;
+}
+
+#final{
+  display:none;
+  color:white;
+  font-family:'Pacifico',cursive;
+  font-size:28px;
+  margin-top:25px;
+  animation:pop 0.7s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="https://image2url.com/r2/default/audio/1770479268267-bda08e35-8b65-4575-9bba-e804052abf32.mp3">
+</audio>
+
+<div class="container">
+  <img src="https://i.postimg.cc/ZR9KtPMG/images.jpg" class="teddy" id="teddy">
+
+  <h1 id="question">Do you want to be my Valentine? 💕</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">NO 💔</button>
+  </div>
+
+  <div id="final">
+    Yayyy! 😍💍<br>
+    Happy Valentine's Day ❤️<br>
+    I Love You Forever 🧸💕
+  </div>
+</div>
+
+<script>
+let noCount=0;
+const texts=[
+  "Really? 😶",
+  "Are you sure? 😢",
+  "Think again 🥺",
+  "Don't break my heart 💔",
+  "You can't say no 😆"
+];
+
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const question=document.getElementById("question");
+const finalMsg=document.getElementById("final");
+const music=document.getElementById("music");
+
+// background hearts
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart-bg";
+  h.innerText="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*20+18+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},500);
+
+// NO button naughty
+function moveNo(){
+  noCount++;
+  question.innerText=texts[Math.min(noCount-1,texts.length-1)];
+  yesBtn.style.transform=`scale(${1+noCount*0.3})`;
+  noBtn.style.left=Math.random()*120-60+"px";
+  noBtn.style.top=Math.random()*40+"px";
+}
+
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("click",moveNo);
+
+// YES click
+yesBtn.addEventListener("click",()=>{
+  music.play();
+  document.querySelector(".buttons").style.display="none";
+  question.style.display="none";
+  finalMsg.style.display="block";
+});
+</script>
+
+</body>
+</html>
